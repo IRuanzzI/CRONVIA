@@ -1,6 +1,7 @@
 import '../models/agendamento.dart';
 import '../models/cliente.dart';
 import '../models/consultorio.dart';
+import '../models/notificacao.dart';
 import '../models/servico.dart';
 
 Future<void> latenciaMock() =>
@@ -28,16 +29,87 @@ class MockDb {
   ];
 
   final List<Cliente> clientes = [
-    Cliente(id: 1, nome: 'Ana Beatriz Souza', telefone: '5511987654321', email: 'ana.souza@email.com', desde: DateTime(2025, 3, 12)),
-    Cliente(id: 2, nome: 'André Lima', telefone: '5511976543210', email: 'andre.lima@email.com', desde: DateTime(2025, 5, 2)),
-    Cliente(id: 3, nome: 'Bruna Carvalho', telefone: '5511965432109', desde: DateTime(2025, 6, 18)),
-    Cliente(id: 4, nome: 'Bruno Alves', telefone: '5521984321098', email: 'bruno.alves@email.com', desde: DateTime(2025, 1, 7)),
-    Cliente(id: 5, nome: 'Camila Rocha', telefone: '5511954321987', desde: DateTime(2025, 8, 21)),
-    Cliente(id: 6, nome: 'Carlos Eduardo Pereira', telefone: '5531993210876', email: 'carlos.pereira@email.com', desde: DateTime(2024, 11, 30)),
-    Cliente(id: 7, nome: 'Daniela Martins', telefone: '5511943210765', desde: DateTime(2025, 2, 14)),
-    Cliente(id: 8, nome: 'Eduardo Ferreira', telefone: '5511932109654', email: 'edu.ferreira@email.com', desde: DateTime(2025, 9, 9)),
-    Cliente(id: 9, nome: 'Fernanda Gomes', telefone: '5521921098543', desde: DateTime(2024, 12, 5)),
-    Cliente(id: 10, nome: 'Gustavo Nunes', telefone: '5511910987432', email: 'gustavo.nunes@email.com', desde: DateTime(2025, 10, 1)),
+    Cliente(
+      id: 1,
+      nome: 'Ana Beatriz Souza',
+      telefone: '5511987654321',
+      email: 'ana.souza@email.com',
+      desde: DateTime(2025, 3, 12),
+    ),
+    Cliente(
+      id: 2,
+      nome: 'André Lima',
+      telefone: '5511976543210',
+      email: 'andre.lima@email.com',
+      desde: DateTime(2025, 5, 2),
+    ),
+    Cliente(
+      id: 3,
+      nome: 'Bruna Carvalho',
+      telefone: '5511965432109',
+      desde: DateTime(2025, 6, 18),
+    ),
+    Cliente(
+      id: 4,
+      nome: 'Bruno Alves',
+      telefone: '5521984321098',
+      email: 'bruno.alves@email.com',
+      desde: DateTime(2025, 1, 7),
+    ),
+    Cliente(
+      id: 5,
+      nome: 'Camila Rocha',
+      telefone: '5511954321987',
+      desde: DateTime(2025, 8, 21),
+    ),
+    Cliente(
+      id: 6,
+      nome: 'Carlos Eduardo Pereira',
+      telefone: '5531993210876',
+      email: 'carlos.pereira@email.com',
+      desde: DateTime(2024, 11, 30),
+    ),
+    Cliente(
+      id: 7,
+      nome: 'Daniela Martins',
+      telefone: '5511943210765',
+      desde: DateTime(2025, 2, 14),
+    ),
+    Cliente(
+      id: 8,
+      nome: 'Eduardo Ferreira',
+      telefone: '5511932109654',
+      email: 'edu.ferreira@email.com',
+      desde: DateTime(2025, 9, 9),
+    ),
+    Cliente(
+      id: 9,
+      nome: 'Fernanda Gomes',
+      telefone: '5521921098543',
+      desde: DateTime(2024, 12, 5),
+    ),
+    Cliente(
+      id: 10,
+      nome: 'Gustavo Nunes',
+      telefone: '5511910987432',
+      email: 'gustavo.nunes@email.com',
+      desde: DateTime(2025, 10, 1),
+    ),
+  ];
+
+  final List<Notificacao> notificacoes = [
+    Notificacao(
+      id: 1,
+      titulo: 'Agendamento confirmado',
+      mensagem: 'Ana Beatriz confirmou presença.',
+      dataHora: DateTime.now().subtract(const Duration(minutes: 30)),
+    ),
+    Notificacao(
+      id: 2,
+      titulo: 'Lembrete enviado',
+      mensagem: 'Bruno Alves recebeu o lembrete pelo WhatsApp.',
+      dataHora: DateTime.now().subtract(const Duration(hours: 3)),
+    ),
   ];
 
   late final List<Agendamento> agendamentos = _gerarAgendamentos();

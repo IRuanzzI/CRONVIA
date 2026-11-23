@@ -14,6 +14,7 @@ import 'data/repositories/auth_repository.dart';
 import 'data/repositories/cliente_repository.dart';
 import 'data/repositories/consultorio_repository.dart';
 import 'data/repositories/empresas_repository.dart';
+import 'data/repositories/notificacoes_repository.dart';
 import 'data/repositories/whatsapp_repository.dart';
 import 'data/storage/session_store.dart';
 import 'router/app_router.dart';
@@ -22,6 +23,7 @@ import 'state/auth_controller.dart';
 import 'state/clientes_controller.dart';
 import 'state/consultorio_controller.dart';
 import 'state/empresas_controller.dart';
+import 'state/notificacoes_controller.dart';
 
 /// Monta controllers e repositórios. É aqui que se escolhe entre a API real
 /// e os dados de exemplo (`--dart-define=USE_MOCK=true`).
@@ -32,6 +34,7 @@ class AppDependencies {
     required this.agenda,
     required this.consultorio,
     required this.empresas,
+    required this.notificacoes,
     required this.whatsapp,
     required this.api,
   });
@@ -43,6 +46,7 @@ class AppDependencies {
 
   /// Painel do MASTER.
   final EmpresasController empresas;
+  final NotificacoesController notificacoes;
   final WhatsappRepository whatsapp;
   final ApiClient? api;
 
@@ -58,12 +62,14 @@ class AppDependencies {
     late final AgendaController agenda;
     late final ConsultorioController consultorio;
     late final EmpresasController empresas;
+    late final NotificacoesController notificacoes;
 
     void limparTudo() {
       clientes.limpar();
       agenda.limpar();
       consultorio.limpar();
       empresas.limpar();
+      notificacoes.limpar();
     }
 
     if (mock) {
@@ -77,12 +83,14 @@ class AppDependencies {
       agenda = AgendaController(MockAgendamentoRepository(db));
       consultorio = ConsultorioController(MockConsultorioRepository(db));
       empresas = EmpresasController(MockEmpresasRepository());
+      notificacoes = NotificacoesController(MockNotificacoesRepository(db));
       return AppDependencies._(
         auth: auth,
         clientes: clientes,
         agenda: agenda,
         consultorio: consultorio,
         empresas: empresas,
+        notificacoes: notificacoes,
         whatsapp: MockWhatsappRepository(),
         api: null,
       );
@@ -104,6 +112,7 @@ class AppDependencies {
       LocalConsultorioRepository(preferencias, () => auth.usuario),
     );
     empresas = EmpresasController(ApiEmpresasRepository(http));
+    notificacoes = NotificacoesController(ApiNotificacoesRepository(http));
     await auth.restaurar();
     return AppDependencies._(
       auth: auth,
@@ -111,6 +120,7 @@ class AppDependencies {
       agenda: agenda,
       consultorio: consultorio,
       empresas: empresas,
+      notificacoes: notificacoes,
       whatsapp: ApiWhatsappRepository(http),
       api: http,
     );
@@ -145,6 +155,7 @@ class _AgendamentoAppState extends State<AgendamentoApp> {
         ChangeNotifierProvider.value(value: d.agenda),
         ChangeNotifierProvider.value(value: d.consultorio),
         ChangeNotifierProvider.value(value: d.empresas),
+        ChangeNotifierProvider.value(value: d.notificacoes),
         Provider<WhatsappRepository>.value(value: d.whatsapp),
       ],
       child: MaterialApp.router(
